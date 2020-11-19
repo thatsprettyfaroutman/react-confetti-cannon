@@ -1,10 +1,38 @@
 import React, { useState, useMemo } from 'react'
-import styled from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 import lerp from 'lerp'
 import { Confetti } from './components/Confetti'
 
+const GlobalStyle = createGlobalStyle`
+  html, body {
+    margin: 0;
+    background-color: #0B1438;
+  }
+`
+
 const AppStyled = styled.div`
-  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`
+
+const Background = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0f1b4d;
+  width: 30rem;
+  height: 40rem;
+  border-radius: 1rem;
+`
+
+const Foreground = styled.div`
+  position: relative;
+  background-color: #142048;
+  width: 20rem;
+  height: 30rem;
+  border-radius: 1rem;
 `
 
 export const App = () => {
@@ -23,17 +51,17 @@ export const App = () => {
     () => [
       () => ({
         x: window.innerWidth / 2,
-        y: window.innerHeight * 0.9,
+        y: window.innerHeight * 0.7,
         angle: 0.6,
       }),
       () => ({
         x: window.innerWidth / 2,
-        y: window.innerHeight * 0.9,
+        y: window.innerHeight * 0.7,
         angle: -0.6,
       }),
       () => ({
         x: window.innerWidth / 2,
-        y: window.innerHeight * 0.9,
+        y: window.innerHeight * 0.7,
         angle: 0,
       }),
     ],
@@ -42,16 +70,19 @@ export const App = () => {
 
   return (
     <AppStyled>
-      <Confetti
-        key={update}
-        launchPoints={launchPoints}
-        // burstAmount={burstAmount}
-        // afterBurstAmount={afterBurstAmount}
-        onEnd={() => {
-          setUpdate(update + 1)
-        }}
-      />
-      Particles: {burstAmount} + {afterBurstAmount}
+      <GlobalStyle />
+      <Background>
+        <Confetti
+          key={update}
+          launchPoints={launchPoints}
+          burstAmount={burstAmount}
+          afterBurstAmount={afterBurstAmount}
+          onEnd={() => {
+            setUpdate(update + 1)
+          }}
+        />
+        <Foreground />
+      </Background>
     </AppStyled>
   )
 }

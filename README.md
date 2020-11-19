@@ -5,7 +5,7 @@ yarn install confetti
 ```
 
 ```javascript
-const ConfettiArea = () => {
+const ConfettiLayer = () => {
   const launchPoints = useMemo(
     () => [
       () => ({
@@ -23,6 +23,7 @@ const ConfettiArea = () => {
       // burstAmount={150}
       // afterBurstAmount={100}
       // onEnd={() => {}}
+      // gravity={new Vector2(0, 0.1)}
     />
   )
 }
