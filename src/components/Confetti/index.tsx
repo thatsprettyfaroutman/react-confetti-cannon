@@ -1,5 +1,4 @@
 import React, { useRef, useLayoutEffect, useEffect, useMemo, FC } from 'react'
-import { range } from 'ramda'
 import styled from 'styled-components'
 import { IConfettiProps, IParticle } from './types'
 import { createNewParticle, drawParticle } from './lib'
@@ -45,9 +44,9 @@ export const Confetti: FC<IConfettiProps> = ({
 
   useEffect(() => {
     launchPoints.forEach((launchPoint: any) => {
-      range(0, burstAmount).forEach(() => {
+      for (let i = 0, n = burstAmount; i < n; i++) {
         particles.current.push(createNewParticle(launchPoint, palette))
-      })
+      }
     })
   }, [particles, launchPoints, burstAmount, palette])
 

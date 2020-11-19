@@ -4,12 +4,10 @@
   "private": false,
   "main": "src/components/Confetti/index.tsx",
   "dependencies": {
-    "@types/ramda": "^0.27.32",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
     "@types/styled-components": "^5.1.4",
     "lerp": "^1.0.3",
-    "ramda": "^0.27.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.0",
