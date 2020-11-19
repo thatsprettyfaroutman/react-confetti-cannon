@@ -1,26 +1,57 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useMemo } from 'react'
+import styled from 'styled-components'
+import lerp from 'lerp'
+import { Confetti } from './components/Confetti'
 
-function App() {
+const AppStyled = styled.div`
+  padding: 2rem;
+`
+
+export const App = () => {
+  const [update, setUpdate] = useState(0)
+
+  const screenSizeMultiplier = window.innerWidth / 800
+
+  const burstAmount = Math.floor(
+    lerp(100, 150, Math.random() * screenSizeMultiplier)
+  )
+  const afterBurstAmount = Math.floor(
+    lerp(40, 120, Math.random() * screenSizeMultiplier)
+  )
+
+  const launchPoints = useMemo(
+    () => [
+      () => ({
+        x: window.innerWidth / 2,
+        y: window.innerHeight * 0.9,
+        angle: 0.6,
+      }),
+      () => ({
+        x: window.innerWidth / 2,
+        y: window.innerHeight * 0.9,
+        angle: -0.6,
+      }),
+      () => ({
+        x: window.innerWidth / 2,
+        y: window.innerHeight * 0.9,
+        angle: 0,
+      }),
+    ],
+    []
+  )
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <AppStyled>
+      <Confetti
+        key={update}
+        launchPoints={launchPoints}
+        // burstAmount={burstAmount}
+        // afterBurstAmount={afterBurstAmount}
+        onEnd={() => {
+          setUpdate(update + 1)
+        }}
+      />
+      Particles: {burstAmount} + {afterBurstAmount}
+    </AppStyled>
+  )
 }
-
-export default App;
