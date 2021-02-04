@@ -1,7 +1,13 @@
 import { CSSProperties } from 'react'
 import { Vector2 } from './Vector2'
 
-export type TLaunchPoint = () => { x: number; y: number; angle: number }
+export type TLaunchPoint = () => {
+  x: number
+  y: number
+  angle: number
+  spreadAngle?: number
+  foreground?: boolean
+}
 
 export interface IParticle {
   id: number
@@ -23,4 +29,5 @@ export interface IConfettiProps {
   gravity?: Vector2
   onEnd?: () => void
   style?: CSSProperties
+  delay?: number
 }

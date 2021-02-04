@@ -1,5 +1,5 @@
-// @ts-ignore
 import lerp from 'lerp'
+import { isNil } from 'ramda'
 import { TLaunchPoint, IParticle } from './types'
 import { Vector2 } from './Vector2'
 
@@ -13,12 +13,19 @@ export const createNewParticle = (
   palette: string[]
 ) => {
   const id = uid()
-  const { x, y, angle } = launchPoint()
-  const correctedAngle =
-    angle + Math.PI + lerp(-Math.PI / 15, Math.PI / 15, Math.random())
-
-  const p = window.innerWidth / 800
-  const initialVelocity = lerp(10, 20, Math.random() * p)
+  const {
+    x,
+    y,
+    angle: angleProp,
+    spreadAngle: spreadAngleProp,
+    foreground, // TODO: change to z or something
+  } = launchPoint()
+  const p = 1 //window.innerWidth / 800;
+  const initialVelocity = lerp(20, 40, Math.random() * p)
+  const spreadAngle = isNil(spreadAngleProp) ? Math.PI / 15 : spreadAngleProp
+  const angleCorrection = angleProp + Math.PI
+  const angle =
+    angleCorrection + lerp(-spreadAngle / 2, spreadAngle / 2, Math.random())
 
   return {
     id,
@@ -28,10 +35,12 @@ export const createNewParticle = (
     rotationVelocity: lerp(-1, 1, Math.random()),
     position: new Vector2(x, y),
     velocity: new Vector2(
-      Math.sin(correctedAngle) * initialVelocity,
-      Math.cos(correctedAngle) * initialVelocity
+      Math.sin(angle) * initialVelocity,
+      Math.cos(angle) * initialVelocity
     ),
-    friction: lerp(0.97, 0.99, Math.random()),
+    friction: foreground
+      ? lerp(0.98, 0.99, Math.random())
+      : lerp(0.96, 0.97, Math.random()),
     color: palette[Math.floor(Math.random() * palette.length)],
   }
 }

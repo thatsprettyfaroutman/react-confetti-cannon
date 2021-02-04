@@ -1,11 +1,16 @@
-import React, { useRef, useLayoutEffect, useEffect, useMemo, FC } from 'react'
+import React, {
+  useRef,
+  useLayoutEffect,
+  useEffect,
+  useMemo,
+  FC,
+  useCallback,
+  useState,
+} from 'react'
 import styled from 'styled-components'
 import { IConfettiProps, IParticle } from './types'
 import { createNewParticle, drawParticle } from './lib'
-import { GRAVITY } from './consts'
 import { Vector2 } from './Vector2'
-
-export * from './Vector2'
 
 const Wrapper = styled.div`
   position: absolute;
@@ -20,8 +25,9 @@ export const Confetti: FC<IConfettiProps> = ({
   launchPoints: launchPointsProp,
   burstAmount = 150,
   afterBurstAmount = 50,
-  gravity = new Vector2(0, 0.1),
-  onEnd = () => {},
+  gravity: gravityProp = new Vector2(0, 0.1),
+  onEnd,
+  delay = 0,
   palette = ['#25DEB3', '#00A8FF', '#EE295C', '#FFF027', '#66BEEC'],
   ...restProps
 }) => {
@@ -29,44 +35,79 @@ export const Confetti: FC<IConfettiProps> = ({
   const active = useRef(false)
   const particles = useRef<IParticle[]>([])
   const maxParticles = burstAmount + afterBurstAmount
+  const particlesSpawnCount = useRef(0)
   const launchPointsFallback = useMemo(
     () => [
       () => ({
         x: window.innerWidth / 2,
         y: window.innerHeight,
         angle: 0,
+        spreadAngle: Math.PI,
       }),
     ],
     []
   )
 
+  // Handle delay
+  const [delayDone, setDelayDone] = useState(false)
+  useEffect(() => {
+    if (!delay) {
+      setDelayDone(true)
+    }
+    const t = setTimeout(() => setDelayDone(true), delay)
+    return () => clearTimeout(t)
+  }, [delay])
+
+  const lastGravity = useRef(new Vector2(0, 0.1))
+  const gravity = useMemo(() => {
+    if (
+      gravityProp.x !== lastGravity.current.x ||
+      gravityProp.y !== lastGravity.current.y
+    ) {
+      return gravityProp
+    }
+    return lastGravity.current
+  }, [gravityProp])
+
   const launchPoints = launchPointsProp || launchPointsFallback
 
+  const handleEnd = useCallback(() => {
+    if (onEnd) {
+      onEnd()
+    }
+    // TODO: setEnded state and render null
+    active.current = false
+  }, [onEnd])
+
   useEffect(() => {
-    launchPoints.forEach((launchPoint: any) => {
+    if (!delayDone) {
+      return
+    }
+    launchPoints.forEach((launchPoint) => {
       for (let i = 0, n = burstAmount; i < n; i++) {
         particles.current.push(createNewParticle(launchPoint, palette))
       }
     })
-  }, [particles, launchPoints, burstAmount, palette])
+  }, [delayDone, particles, launchPoints, burstAmount, palette])
 
   useLayoutEffect(() => {
+    if (!delayDone) {
+      return
+    }
     const canvas = canvasRef && canvasRef.current
     const ctx = canvas && canvas.getContext && canvas.getContext('2d')
-
     if (!ctx) {
       return
     }
     active.current = true
 
-    let spawnCount = particles.current.length
     const spawner = setInterval(() => {
-      launchPoints.forEach((launchPoint: any) => {
+      launchPoints.forEach((launchPoint) => {
         particles.current.push(createNewParticle(launchPoint, palette))
-        spawnCount++
+        particlesSpawnCount.current++
       })
 
-      if (spawnCount > maxParticles) {
+      if (particlesSpawnCount.current > maxParticles) {
         clearInterval(spawner)
       }
     }, 1000 / 30)
@@ -76,9 +117,9 @@ export const Confetti: FC<IConfettiProps> = ({
         (particle) => particle.position.y < window.innerHeight + 200
       )
 
-      if (particles.current.length <= 0) {
+      if (particlesSpawnCount.current > 0 && particles.current.length <= 0) {
         clearInterval(cleaner)
-        onEnd()
+        handleEnd()
       }
     }, 1000)
 
@@ -103,24 +144,34 @@ export const Confetti: FC<IConfettiProps> = ({
         particle.velocity.multiplyScalar(particle.friction)
         particle.rotationVelocity *= particle.friction
 
-        particle.velocity.add(GRAVITY)
+        particle.velocity.add(gravity)
         particle.position.add(particle.velocity)
         particle.rotation += particle.rotationVelocity
 
         drawParticle(ctx, particle)
       }
-      requestAnimationFrame(render)
     }
-
-    render()
+    const rafRender = () => requestAnimationFrame(render)
+    const renderer = setInterval(rafRender, 1000 / 60)
 
     return () => {
       active.current = false
       clearInterval(spawner)
       clearInterval(cleaner)
+      clearInterval(renderer)
       particles.current = []
     }
-  }, [canvasRef, particles, maxParticles, launchPoints, onEnd, palette])
+  }, [
+    delayDone,
+    canvasRef,
+    particles,
+    particlesSpawnCount,
+    maxParticles,
+    launchPoints,
+    handleEnd,
+    palette,
+    gravity,
+  ])
 
   return (
     <Wrapper {...restProps}>
