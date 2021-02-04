@@ -2,7 +2,8 @@
   "name": "react-confetti-cannon",
   "version": "0.2.1",
   "private": false,
-  "main": "src/components/Confetti/index.tsx",
+  "main": "dist/index.js",
+  "licence": "UNLICENCED",
   "dependencies": {
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
@@ -17,6 +18,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "bundle": "npx @vercel/ncc build ./src/components/Confetti/index.tsx -m -o dist",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

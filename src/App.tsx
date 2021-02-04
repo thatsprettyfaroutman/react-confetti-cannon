@@ -21,7 +21,7 @@ const Background = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #0f1b4d;
+  /* background-color: #0f1b4d; */
   width: 30rem;
   height: 40rem;
   border-radius: 1rem;
@@ -29,7 +29,7 @@ const Background = styled.div`
 
 const Foreground = styled.div`
   position: relative;
-  background-color: #142048;
+  /* background-color: #142048; */
   width: 20rem;
   height: 30rem;
   border-radius: 1rem;
@@ -51,17 +51,17 @@ export const App = () => {
     () => [
       () => ({
         x: window.innerWidth / 2,
-        y: window.innerHeight * 0.7,
+        y: window.innerHeight * 0.9,
         angle: 0.6,
       }),
       () => ({
         x: window.innerWidth / 2,
-        y: window.innerHeight * 0.7,
+        y: window.innerHeight * 0.9,
         angle: -0.6,
       }),
       () => ({
         x: window.innerWidth / 2,
-        y: window.innerHeight * 0.7,
+        y: window.innerHeight * 0.9,
         angle: 0,
       }),
     ],

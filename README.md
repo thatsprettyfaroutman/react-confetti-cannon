@@ -1,7 +1,7 @@
 🎉🎉🎉 CONFETTI 🎉🎉🎉
 
 ```
-yarn install confetti
+yarn install react-confetti-cannon
 ```
 
 ```javascript

@@ -1,3 +1,4 @@
+// @ts-ignore
 import lerp from 'lerp'
 import { TLaunchPoint, IParticle } from './types'
 import { Vector2 } from './Vector2'
