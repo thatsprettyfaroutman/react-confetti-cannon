@@ -1,6 +1,6 @@
 {
   "name": "react-confetti-cannon",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": false,
   "main": "./dist/index.js",
   "types": "./dist/components/Confetti/index.d.ts",
