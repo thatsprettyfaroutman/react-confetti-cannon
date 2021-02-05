@@ -21765,7 +21765,7 @@ function e(e){return e&&"object"==typeof e&&"default"in e?e.default:e}__webpack_
 
 /***/ }),
 
-/***/ 2919:
+/***/ 90:
 /***/ ((__unused_webpack_module, __webpack_exports__, __nccwpck_require__) => {
 
 "use strict";
@@ -21774,7 +21774,7 @@ __nccwpck_require__.r(__webpack_exports__);
 
 // EXPORTS
 __nccwpck_require__.d(__webpack_exports__, {
-  "Confetti": () => /* reexport */ Confetti
+  "Confetti": () => /* binding */ Confetti
 });
 
 // EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
@@ -21896,6 +21896,7 @@ var __rest = (undefined && undefined.__rest) || function (s, e) {
         }
     return t;
 };
+
 
 
 
@@ -22024,18 +22025,6 @@ var Confetti = function (_a) {
 };
 var templateObject_1;
 
-// CONCATENATED MODULE: ./src/index.tsx
-// import React from 'react'
-// import ReactDOM from 'react-dom'
-// import { App } from './App'
-
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>,
-//   document.getElementById('root')
-// )
-
 
 /***/ }),
 
@@ -22125,6 +22114,6 @@ module.exports = require("stream");;
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __nccwpck_require__(2919);
+/******/ 	return __nccwpck_require__(90);
 /******/ })()
 ;

@@ -12,6 +12,8 @@ import { IConfettiProps, IParticle } from './types'
 import { createNewParticle, drawParticle } from './lib'
 import { Vector2 } from './Vector2'
 
+export * from './types'
+
 const Wrapper = styled.div`
   position: absolute;
   top: 0;
