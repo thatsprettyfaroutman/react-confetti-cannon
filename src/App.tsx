@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
-import lerp from 'lerp'
 import { Confetti } from './components/Confetti'
+import { lerp } from './components/Confetti/lib'
 
 const GlobalStyle = createGlobalStyle`
   html, body {

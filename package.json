@@ -2,35 +2,30 @@
   "name": "react-confetti-cannon",
   "version": "0.9.0",
   "private": false,
-  "main": "./dist/index.js",
-  "types": "./dist/components/Confetti/index.d.ts",
+  "main": "./dist/bundle.js",
+  "types": "./src/index.tsx",
   "licence": "MIT",
   "devDependencies": {
     "@types/ramda": "^0.27.36",
-    "@types/react": "^16.9.53",
-    "@types/react-dom": "^16.9.8",
+    "@types/react": "^17.0.1",
+    "@types/react-dom": "^17.0.0",
     "@types/styled-components": "^5.1.4",
-    "@vercel/ncc": "0.27.0",
-    "rimraf": "3.0.2",
-    "react-scripts": "^4.0.0",
-    "typescript": "^4.0.3"
+    "rollup": "^2.38.5",
+    "rollup-plugin-typescript": "^1.0.1",
+    "rollup-watch": "^4.3.1",
+    "tslib": "^2.1.0",
+    "typescript": "^4.1.3",
+    "typings": "^2.1.1"
   },
   "peerDependencies": {
-    "react": ">=16.10",
-    "react-dom": ">=16.9",
+    "ramda": ">=0.27",
+    "react": ">=17.0",
+    "react-dom": ">=17.0",
     "styled-components": ">=5.2"
   },
-  "dependencies": {
-    "lerp": "^1.0.3",
-    "ramda": "^0.27.1"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "bundle": "rimraf dist && ncc build ./src/components/Confetti/index.tsx",
-    "prepare": "yarn bundle",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "rollup -c",
+    "watch": "rollup -cw"
   },
   "eslintConfig": {
     "extends": [
@@ -49,5 +44,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "dependencies": {
+    "ramda": "^0.27.1"
   }
 }

@@ -1,7 +1,8 @@
-import lerp from 'lerp'
 import { isNil } from 'ramda'
 import { TLaunchPoint, IParticle } from './types'
 import { Vector2 } from './Vector2'
+
+export const lerp = (v0: number, v1: number, t: number) => v0 * (1 - t) + v1 * t
 
 export const uid = (() => {
   let count = 0
