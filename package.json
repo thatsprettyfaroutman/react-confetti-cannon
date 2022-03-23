@@ -1,10 +1,9 @@
 {
   "name": "react-confetti-cannon",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "private": false,
   "main": "./dist/bundle.js",
   "types": "./src/index.tsx",
-  "licence": "MIT",
   "devDependencies": {
     "@types/ramda": "^0.27.36",
     "@types/react": "^17.0.1",
@@ -47,5 +46,6 @@
   },
   "dependencies": {
     "ramda": "^0.27.1"
-  }
+  },
+  "license": "MIT"
 }
